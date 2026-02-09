@@ -380,9 +380,9 @@ const Homepage = () => {
               <ul className="space-y-2 sm:space-y-3">
                 {['About Us', 'Careers', 'Case Studies', 'Blog'].map((item, index) => (
                   <li key={index}>
-                    <a href="#" className="text-sm sm:text-base text-white/70 hover:text-cyan-400 transition-colors">
+                    <Link to="#" className="text-sm sm:text-base text-white/70 hover:text-cyan-400 transition-colors">
                       {item}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
