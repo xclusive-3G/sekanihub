@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 const Getstartpage = () => {
     const [currentStep, setCurrentStep] = useState(1);
+      const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     // Step 1: Project Type
     projectType: '',
@@ -56,8 +59,7 @@ const Getstartpage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    // Here you would typically send the data to your backend
-    alert('Thank you! We\'ll be in touch within 24 hours.');
+    navigate('/project-submitted');
   };
 
   const progressPercentage = (currentStep / totalSteps) * 100;

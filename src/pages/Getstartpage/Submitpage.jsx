@@ -1,4 +1,5 @@
 import React , { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 
 const Submitpage = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -74,19 +75,19 @@ const Submitpage = () => {
       {/* Header */}
       <header className="relative z-10 px-4 sm:px-6 lg:px-20 py-6 sm:py-8">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <a 
-            href="/"
+          <Link 
+            to="/"
             className="text-2xl sm:text-3xl font-black text-white tracking-tight hover:opacity-80 transition-opacity"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Sekani Hub
-          </a>
-          <a 
-            href="/"
+          </Link>
+          <Link 
+            to="/"
             className="text-white/70 hover:text-white transition-colors text-sm sm:text-base"
           >
             ← Back to Home
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -114,7 +115,7 @@ const Submitpage = () => {
             </h1>
             
             <p className="text-lg sm:text-xl lg:text-2xl text-white/80 max-w-3xl mx-auto mb-6 sm:mb-8">
-              Thank you for choosing Sekani Hub! We're excited to bring your AI vision to life.
+              Thank you for choosing Sekani Hub We're excited to bring your AI vision to life.
             </p>
 
             {/* Countdown Timer */}
@@ -206,7 +207,7 @@ const Submitpage = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-gradient-to-r from-orange-500/10 to-cyan-500/10 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/20 mb-8 sm:mb-12">
+          {/* <div className="bg-gradient-to-r from-orange-500/10 to-cyan-500/10 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/20 mb-8 sm:mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6 text-center" style={{ fontFamily: "'Playfair Display', serif" }}>
               While You Wait...
             </h3>
@@ -239,7 +240,7 @@ const Submitpage = () => {
                 <p className="text-xs sm:text-sm text-white/60">Book a time that works</p>
               </a>
             </div>
-          </div>
+          </div> */}
 
           {/* FAQ Section */}
           <div className="mb-8 sm:mb-12">
@@ -281,7 +282,7 @@ const Submitpage = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
               <a 
-                href="mailto:contact@neuralforge.ai"
+                href="isaac@sekanihub.com"
                 className="inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-cyan-500 text-white rounded-lg sm:rounded-xl font-semibold hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 hover:-translate-y-1 text-sm sm:text-base"
               >
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
