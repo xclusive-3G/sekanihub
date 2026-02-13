@@ -240,7 +240,7 @@ const Aboutus = () => {
             className="text-xl sm:text-2xl font-black text-slate-900 hover:opacity-70 transition-opacity duration-300"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            Neural Forge
+            Sekani Hub
           </Link>
           
           <div className="flex items-center gap-4 sm:gap-6">
