@@ -1,11 +1,15 @@
 // ProjectSubmitted.jsx - Success page with real data from backend
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useMemo } from "react";
 
 export default function ProjectSubmitted() {
   const location = useLocation();
   const navigate = useNavigate();
-  const state = location.state || {};
+  
+  const state = useMemo(() => {
+  return location.state || {};
+}, [location.state]);
 
   // Redirect if no data (user directly accessed page)
   useEffect(() => {
