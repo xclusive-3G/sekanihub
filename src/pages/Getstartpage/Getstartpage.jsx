@@ -1,27 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+// API Service
+const API_URL =  'https://sekanihubbackend.onrender.com/';
 
-const Getstartpage = () => {
-    const [currentStep, setCurrentStep] = useState(1);
-      const navigate = useNavigate();
-
+export default function StartYourProject() {
+  const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+  
   const [formData, setFormData] = useState({
-    // Step 1: Project Type
     projectType: '',
-    
-    // Step 2: Project Details
     projectName: '',
     projectDescription: '',
     timeline: '',
     budget: '',
-    
-    // Step 3: Requirements
     features: [],
     industry: '',
     targetAudience: '',
-    
-    // Step 4: Contact Info
     fullName: '',
     email: '',
     company: '',
@@ -33,6 +31,7 @@ const Getstartpage = () => {
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    setError(null);
   };
 
   const handleFeatureToggle = (feature) => {
@@ -56,13 +55,45 @@ const Getstartpage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    navigate('/project-submitted');
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      // Call backend API
+      const response = await fetch(`${API_URL}api/projects/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to submit project');
+      }
+
+      // Navigate to success page with project data
+      navigate('/project-submitted', { 
+        state: { 
+          projectId: data.data.projectId,
+          email: formData.email,
+          projectName: formData.projectName
+        } 
+      });
+      
+    } catch (err) {
+      console.error('Submission error:', err);
+      setError(err.message || 'Failed to submit project. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   const progressPercentage = (currentStep / totalSteps) * 100;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
       {/* Animated background elements */}
@@ -72,19 +103,19 @@ const Getstartpage = () => {
       {/* Header */}
       <header className="relative z-10 px-4 sm:px-6 lg:px-20 py-6 sm:py-8">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <a 
-            href="/"
+          <Link 
+            to="/"
             className="text-2xl sm:text-3xl font-black text-white tracking-tight hover:opacity-80 transition-opacity"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Sekani Hub
-          </a>
-          <a 
-            href="/"
+          </Link>
+          <Link 
+            to="/"
             className="text-white/70 hover:text-white transition-colors text-sm sm:text-base"
           >
             ← Back to Home
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -143,6 +174,16 @@ const Getstartpage = () => {
               ></div>
             </div>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 bg-red-500/10 border border-red-500/30 rounded-xl p-4 animate-shake">
+              <div className="flex items-start gap-3">
+                <span className="text-red-400 text-xl">⚠️</span>
+                <p className="text-red-400 text-sm sm:text-base flex-1">{error}</p>
+              </div>
+            </div>
+          )}
 
           {/* Form Card */}
           <div className="bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 border border-white/10 shadow-2xl">
@@ -215,7 +256,7 @@ const Getstartpage = () => {
                         value={formData.projectDescription}
                         onChange={(e) => handleInputChange('projectDescription', e.target.value)}
                         placeholder="Describe what you want to build and the problem it will solve..."
-                        rows="5"
+                        rows={5}
                         className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/10 border border-white/20 rounded-lg sm:rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/50 transition-all resize-none text-sm sm:text-base"
                       ></textarea>
                     </div>
@@ -443,7 +484,8 @@ const Getstartpage = () => {
                   <button
                     type="button"
                     onClick={prevStep}
-                    className="order-2 sm:order-1 px-6 sm:px-8 py-3 sm:py-4 bg-white/10 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 text-sm sm:text-base"
+                    disabled={isSubmitting}
+                    className="order-2 sm:order-1 px-6 sm:px-8 py-3 sm:py-4 bg-white/10 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     ← Previous
                   </button>
@@ -461,9 +503,20 @@ const Getstartpage = () => {
                 ) : (
                   <button
                     type="submit"
-                    className="order-1 sm:order-2 flex-1 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-cyan-500 text-white rounded-lg sm:rounded-xl font-semibold hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 text-sm sm:text-base"
+                    disabled={isSubmitting}
+                    className="order-1 sm:order-2 flex-1 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-cyan-500 text-white rounded-lg sm:rounded-xl font-semibold hover:shadow-xl hover:shadow-orange-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base flex items-center justify-center gap-2"
                   >
-                    Submit Project →
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Submitting...
+                      </>
+                    ) : (
+                      'Submit Project →'
+                    )}
                   </button>
                 )}
               </div>
@@ -492,8 +545,17 @@ const Getstartpage = () => {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-    </div>
-  )
-}
 
-export default Getstartpage
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+          20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+          animation: shake 0.5s;
+        }
+      `}</style>
+    </div>
+  );
+}
