@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 // API Service
-const API_URL =  'https://sekanihubbackend.onrender.com/';
+const API_URL =  'https://sekanihubbackend.onrender.com';
 
 export default function StartYourProject() {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ export default function StartYourProject() {
 
     try {
       // Call backend API
-      const response = await fetch(`${API_URL}api/projects/submit`, {
+      const response = await fetch(`${API_URL}/api/projects/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
