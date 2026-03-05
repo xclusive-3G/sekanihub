@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 // API Service
-const API_URL =  'https://sekanihubbackend.onrender.com';
-// const API_URL = 'https://api.sekanihub.com';
+// const API_URL =  'https://sekanihubbackend.onrender.com';
+const API_URL = 'https://api.sekanihub.com';
 
 export default function StartYourProject() {
   const navigate = useNavigate();
