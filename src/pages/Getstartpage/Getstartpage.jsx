@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+
 // API Service
 // const API_URL =  'https://sekanihubbackend.onrender.com';
-const API_URL = 'https://api.sekanihub.com';
+// const API_URL = 'http://localhost:5000';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function StartYourProject() {
   const navigate = useNavigate();
