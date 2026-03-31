@@ -293,6 +293,9 @@ export default function StartYourProject() {
                           className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/10 border border-white/20 rounded-lg sm:rounded-xl text-white focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/50 transition-all text-sm sm:text-base"
                         >
                           <option value="" className="bg-slate-800">Select budget</option>
+                          <option value="10k-25k" className="bg-slate-800">$1k - $2k</option>
+                          <option value="25k-50k" className="bg-slate-800">$2k - $5k</option>
+                          <option value="50k-100k" className="bg-slate-800">$5k - $10k</option>
                           <option value="10k-25k" className="bg-slate-800">$10k - $25k</option>
                           <option value="25k-50k" className="bg-slate-800">$25k - $50k</option>
                           <option value="50k-100k" className="bg-slate-800">$50k - $100k</option>
