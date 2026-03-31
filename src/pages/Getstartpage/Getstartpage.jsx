@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 // const API_URL =  'https://sekanihubbackend.onrender.com';
 // const API_URL = 'http://localhost:5000';
 
-const API_URL = process.env.VITE_API_URL;
+const API_URL = 'https://api.sekanihub.com';
 
 export default function StartYourProject() {
   const navigate = useNavigate();
